@@ -1,0 +1,18 @@
+SCHEMAS USED:
+-------------
+schema1
+
+TABLES USED:
+------------
+customers
+schema1.sales
+
+CTEs FOUND:
+-----------
+cte_sales
+cte_top_customers
+
+CTE DEPENDENCIES:
+-----------------
+cte_sales -> None
+cte_top_customers -> cte_sales
