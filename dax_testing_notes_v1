@@ -1,0 +1,135 @@
+-- inner join
+-- ===============
+EVALUATE
+NATURALINNERJOIN(
+    Customers,
+    Sales
+)
+
+
+-- join using manual select
+-- ===========================
+EVALUATE
+SELECTCOLUMNS(
+    Sales,
+    "SaleID", Sales[SaleID],
+    "CustomerID", Sales[CustomerID],
+    "CustomerName", RELATED(Customers[CustomerName]),
+    "ProductName", RELATED(Products[ProductName]),
+    "SalesAmount", Sales[SalesAmount]
+)
+
+
+-- Count of Sales per Customer using RELATEDTABLE
+-- =================================================
+EVALUATE
+ADDCOLUMNS(
+    Customers,
+    "TotalSales", COUNTROWS(RELATEDTABLE(Sales))
+)
+
+-- Start Date > End Date (Date Logic Check)
+-- ===========================================
+EVALUATE
+FILTER(
+    Orders,
+    Orders[StartDate] > Orders[EndDate]
+)
+
+
+-- Future Dates Check
+-- =====================
+EVALUATE
+FILTER(
+    Sales,
+    Sales[Date] > TODAY()
+)
+
+-- Missing Required Columns (Blank Check)
+-- =========================================
+EVALUATE
+FILTER(
+    Customers,
+    ISBLANK(Customers[CustomerName])
+)
+
+-- Numeric Values Out of Range
+-- ==============================
+EVALUATE
+FILTER(
+    Sales,
+    Sales[SalesAmount] <= 0
+)
+
+-- Invalid Category Values
+-- ==========================
+EVALUATE
+FILTER(
+    Products,
+    NOT Products[Category] IN { "Electronics", "Furniture", "Clothing" }
+)
+
+-- Combined Validation (Multiple Rules)
+-- =======================================
+EVALUATE
+FILTER(
+    Sales,
+    Sales[SalesAmount] <= 0
+    || ISBLANK(Sales[Date])
+    || ISBLANK(RELATED(Customers[CustomerID]))
+)
+
+-- group by Sales[CustomerID], Sales[ProductID]
+-- ===============================================
+EVALUATE
+FILTER(
+    ADDCOLUMNS(
+        SUMMARIZE(Sales, Sales[CustomerID], Sales[ProductID]),
+        "RowCount", CALCULATE(COUNTROWS(Sales))
+    ),
+    [RowCount] > 1
+)
+
+-- Customers with no Sales
+-- ==========================
+EVALUATE
+FILTER(
+    Customers,
+    COUNTROWS(RELATEDTABLE(Sales)) = 0
+)
+
+-- Null / Missing Values
+-- ========================
+EVALUATE
+FILTER(
+    Orders,
+    Orders[Status] = "Active" && NOT ISBLANK(Orders[EndDate])
+)
+
+-- Numeric / Range Validation
+-- =============================
+EVALUATE
+FILTER(
+    Sales,
+    Sales[Discount] < 0 || Sales[Discount] > 1
+)
+
+-- Conditional Logic / Business Rules
+-- =====================================
+EVALUATE
+FILTER(
+    Sales,
+    Sales[UnitPrice] * Sales[Quantity] <> Sales[TotalAmount]
+)
+
+-------------------------------------------------------------------------------
+-- Pattern / Format Validation
+-- ==============================
+EVALUATE
+FILTER(
+    Customers,
+    LEN(Customers[CustomerName]) <> 10
+)
+
+
+
