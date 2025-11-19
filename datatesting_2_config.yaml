@@ -1,0 +1,20 @@
+postgres:
+  host: "localhost"
+  database: "testing"
+  user: "postgres"
+  password: "root"
+
+schema: "public"
+
+output:
+  all_table_list_row_count_query_file: "output/row_count_queries.sql"
+  all_table_list_row_count_query_execution_result_file: "output/table_row_counts.csv"
+  all_tables_list_file_path: "output/tables_list.csv"
+  
+files:
+  tables_csv: "output/tables_list.csv"
+  row_counts_csv: "output/table_row_counts.csv"
+  desc_csv: "output/clinical_schema_description.csv"
+  output_dir: "output"
+  filtered_csv: "output/filtered_columns.csv"
+  recommendation_txt: "output/recommendation.txt"
