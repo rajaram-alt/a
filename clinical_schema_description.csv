@@ -1,0 +1,19 @@
+Table,Table Description,Column,Column Description
+study,Clinical study details,study_id,Primary key for study
+study,Clinical study details,study_name,Name of the study
+study,Clinical study details,therapeutic_area,Therapeutic area of the study
+study,Clinical study details,start_date,Start date of the study
+study,Clinical study details,end_date,End date of the study
+study,Clinical study details,status,Current status of the study
+site,Clinical site information,site_id,Primary key for site
+site,Clinical site information,study_id,Reference to study
+site,Clinical site information,site_name,Name of the site
+site,Clinical site information,country,Country of the site
+site,Clinical site information,city,City of the site
+site,Clinical site information,total_patients,Number of patients enrolled
+investigator,Investigator details at each site,investigator_id,Primary key for investigator
+investigator,Investigator details at each site,site_id,Reference to site
+investigator,Investigator details at each site,first_name,First name of investigator
+investigator,Investigator details at each site,last_name,Last name of investigator
+investigator,Investigator details at each site,email,Email address
+investigator,Investigator details at each site,experience_years,Years of experience
